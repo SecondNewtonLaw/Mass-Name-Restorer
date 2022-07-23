@@ -4,8 +4,11 @@ Mass name restorer is a Discord bot, that, based on Regular Patterns, or in a si
 
 How to set-up:
     - Edit Main.cs `srId` variable to have your servers' id
+
     - Create a file called `token.IGNORE` in the folder where the application will be executed, and copy-paste the token in it
+    
     - Run the executable.
+    
     - Make the bot build commands typing (After it signs in) `buildcommand`, and wait for completition.
 
 Written by SecondNewtonLaw
