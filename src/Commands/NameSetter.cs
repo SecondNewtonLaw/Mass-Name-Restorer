@@ -37,16 +37,17 @@ internal partial class Commands
         {
             try
             {
+                // User has the username with the prefix in it.
+                if (targetRole.Members.ElementAt(i).Username.Split(' ')[0].Contains(namePrefix))
+                    continue;
+
                 // User already has the prefix in it.
                 if (targetRole.Members.ElementAt(i).Nickname.Split(' ')[0].Contains(namePrefix))
                     continue;
             }
             catch (NullReferenceException) // The user has no nickname. Continue Executing with another logic.
             {
-
-                // User has the username with the prefix in it.
-                if (targetRole.Members.ElementAt(i).Username.Split(' ')[0].Contains(namePrefix))
-                    continue;
+                continue;
             }
 
             try
