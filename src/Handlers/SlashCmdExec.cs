@@ -22,6 +22,9 @@ public partial class Handlers
                 case "namereset":
                     await Commands.RestoreNamesCommand(cmdSket);
                     break;
+                case "nameprefix":
+                    await Commands.NameSetterCommand(cmdSket);
+                    break;
             }
         }
         catch (Exception ex)

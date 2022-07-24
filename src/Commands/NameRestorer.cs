@@ -43,7 +43,7 @@ internal partial class Commands
         await msg.ModifyAsync(x =>
         {
             if (useRegex)
-                x.Content = $"Obtained {users.Count} users.\n\nStarting username reset based on regex pattern -> **`{usernamePattern}`** | Case Sensitive: {caseSensitive}";
+                x.Content = $"Obtained {users.Count} users.\n\nStarting username reset based on regex pattern -> **`{usernamePattern}`** | Case Sensitive: {caseSensitive} | ETA: {users.Count * 300} ms ~ {users.Count * 300 / 1000 / 60} min(s)";
             else
                 x.Content = $"Obtained {users.Count} users.\n\nStarting username reset based on if the username EXPLICITLY contains in any part of the name -> **`{usernamePattern}`** | Case Sensitive: {caseSensitive} | ETA: {users.Count * 300} ms ~ {users.Count * 300 / 1000 / 60} min(s)";
         });

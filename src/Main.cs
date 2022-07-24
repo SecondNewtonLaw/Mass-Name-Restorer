@@ -15,6 +15,7 @@ public static class MainActivity
     internal static DiscordSocketClient BotClient = new(new DiscordSocketConfig()
     {
         GatewayIntents = GatewayIntents.Guilds | GatewayIntents.GuildMessages | GatewayIntents.GuildMembers | GatewayIntents.GuildIntegrations,
+        AlwaysDownloadUsers = true,
         LogLevel = LogSeverity.Debug // YES BOY GIMME THAT FALLING TEXT!
     });
     private static string? Token { get; } = File.ReadLines($"{Environment.CurrentDirectory}/token.IGNORE").ElementAt(0);
@@ -39,13 +40,21 @@ public static class MainActivity
         CommandBuilder builder = new();
         while (true)
         {
-            switch (Console.ReadLine()!)
+            try
             {
-                case "buildcommand":
-                    AnsiConsole.MarkupLine($"[yellow bold underline][[Command Line Interface]][/] -> [green bold underline]Building commands [[SLASH]] for [yellow underline bold]{BotClient.GetGuild(srId).Name}({srId})[/][/]");
-                    await builder.BuildFor(BotClient.GetGuild(srId));
-                    AnsiConsole.MarkupLine("[yellow bold underline][[Command Line Interface]][/] -> [green bold underline]Command Building Completed![/] ✅");
-                    break;
+                string x = Console.ReadLine()!;
+                switch (x)
+                {
+                    case "buildcommand":
+                        AnsiConsole.MarkupLine($"[yellow bold underline][[Command Line Interface]][/] -> [green bold underline]Building commands [[SLASH]] for [yellow underline bold]{BotClient.GetGuild(srId).Name} ({srId})[/][/]");
+                        await builder.BuildFor(BotClient.GetGuild(srId));
+                        AnsiConsole.MarkupLine("[yellow bold underline][[Command Line Interface]][/] -> [green bold underline]Command Building Completed![/] ✅");
+                        break;
+                }
+            }
+            catch
+            {
+                Console.WriteLine("Standard Input Error. Try again");
             }
         }
     }
