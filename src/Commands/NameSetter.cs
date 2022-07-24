@@ -27,7 +27,7 @@ internal partial class Commands
         await msg.ModifyAsync(x =>
         {
             string yesno = replaceCurrentNickName ? "Yes" : "No";
-            x.Content = $"Found {cachedCount} users in role <@&{role.Id}>. Modifying Nicknames to have at the start **`{namePrefix}`** | Replace Current NickName: {yesno} | ETA: {cachedCount * 300} ms ~ {cachedCount * 300 / 1000 / 60} min(s)";
+            x.Content = $"Found {cachedCount} users in role <@&{role.Id}>. Modifying Nicknames to have at the start **`{namePrefix}`** | Replace Current NickName: {yesno} | ETA: {cachedCount * 500} ms ~ {cachedCount * 500 / 1000 / 60} min(s)";
         });
 
         int modifiedUsers = 0;
@@ -35,19 +35,18 @@ internal partial class Commands
         StringBuilder nickBuilder = new();
         for (int i = 0; i < cachedCount; i++)
         {
+            // User has the username with the prefix in it.
+            if (targetRole.Members.ElementAt(i).Username.Split(' ')[0].Contains(namePrefix))
+                continue;
             try
             {
-                // User has the username with the prefix in it.
-                if (targetRole.Members.ElementAt(i).Username.Split(' ')[0].Contains(namePrefix))
-                    continue;
-
                 // User already has the prefix in it.
                 if (targetRole.Members.ElementAt(i).Nickname.Split(' ')[0].Contains(namePrefix))
                     continue;
             }
             catch (NullReferenceException) // The user has no nickname. Continue Executing with another logic.
             {
-                continue;
+
             }
 
             try
@@ -79,7 +78,7 @@ internal partial class Commands
                 failedUsers++;
             }
             // Avoid Rate Limit (To some extent)
-            await Task.Delay(300);
+            await Task.Delay(500);
         }
         await msg.ModifyAsync(x => x.Content = $"Done! Nicknames Modified for {modifiedUsers} users in role <@&{role.Id}>. | Failed: {failedUsers}");
     }
